@@ -118,7 +118,8 @@ namespace Xamarin.Forms.Platform.Android
 				if (arguments.Accept != null)
 					alert.SetButton((int)DialogButtonType.Positive, arguments.Accept, (o, args) => arguments.SetResult(true));
 				alert.SetButton((int)DialogButtonType.Negative, arguments.Cancel, (o, args) => arguments.SetResult(false));
-				alert.CancelEvent += (o, args) => { arguments.SetResult(false); };
+				if (arguments.AllowCancelEvent)
+					alert.CancelEvent += (o, args) => { arguments.SetResult(false); };
 				alert.Show();
 			}
 

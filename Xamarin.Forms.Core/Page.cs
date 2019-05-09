@@ -21,7 +21,7 @@ namespace Xamarin.Forms
 		public const string ActionSheetSignalName = "Xamarin.ShowActionSheet";
 
 		internal static readonly BindableProperty IgnoresContainerAreaProperty = BindableProperty.Create("IgnoresContainerArea", typeof(bool), typeof(Page), false);
-		
+
 		public static readonly BindableProperty BackgroundImageSourceProperty = BindableProperty.Create(nameof(BackgroundImageSource), typeof(ImageSource), typeof(Page), default(ImageSource));
 
 		[Obsolete("BackgroundImageProperty is obsolete as of 4.0.0. Please use BackgroundImageSourceProperty instead.")]
@@ -120,8 +120,8 @@ namespace Xamarin.Forms
 
 		public IList<ToolbarItem> ToolbarItems { get; internal set; }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public Rectangle ContainerArea
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public Rectangle ContainerArea
 		{
 			get { return _containerArea; }
 			set
@@ -134,17 +134,17 @@ namespace Xamarin.Forms
 			}
 		}
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool IgnoresContainerArea
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public bool IgnoresContainerArea
 		{
 			get { return (bool)GetValue(IgnoresContainerAreaProperty); }
 			set { SetValue(IgnoresContainerAreaProperty, value); }
 		}
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ObservableCollection<Element> InternalChildren { get; } = new ObservableCollection<Element>();
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public ObservableCollection<Element> InternalChildren { get; } = new ObservableCollection<Element>();
 
-		internal override ReadOnlyCollection<Element> LogicalChildrenInternal => 
+		internal override ReadOnlyCollection<Element> LogicalChildrenInternal =>
 			_logicalChildren ?? (_logicalChildren = new ReadOnlyCollection<Element>(InternalChildren));
 
 		public event EventHandler LayoutChanged;
@@ -165,12 +165,12 @@ namespace Xamarin.Forms
 			return DisplayAlert(title, message, null, cancel);
 		}
 
-		public Task<bool> DisplayAlert(string title, string message, string accept, string cancel)
+		public Task<bool> DisplayAlert(string title, string message, string accept, string cancel, bool allowCancelEvent = true)
 		{
 			if (string.IsNullOrEmpty(cancel))
 				throw new ArgumentNullException("cancel");
 
-			var args = new AlertArguments(title, message, accept, cancel);
+			var args = new AlertArguments(title, message, accept, cancel, allowCancelEvent);
 			MessagingCenter.Send(this, AlertSignalName, args);
 			return args.Result.Task;
 		}
@@ -241,7 +241,7 @@ namespace Xamarin.Forms
 				SetInheritedBindingContext(toolbarItem, BindingContext);
 			}
 
-			if(_titleView != null)
+			if (_titleView != null)
 				SetInheritedBindingContext(_titleView, BindingContext);
 		}
 
@@ -329,8 +329,8 @@ namespace Xamarin.Forms
 			}
 		}
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public void SendAppearing()
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public void SendAppearing()
 		{
 			if (_hasAppeared)
 				return;
@@ -349,8 +349,8 @@ namespace Xamarin.Forms
 			FindApplication(this)?.OnPageAppearing(this);
 		}
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public void SendDisappearing()
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public void SendDisappearing()
 		{
 			if (!_hasAppeared)
 				return;

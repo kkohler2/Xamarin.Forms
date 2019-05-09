@@ -6,19 +6,25 @@ namespace Xamarin.Forms.Internals
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public class AlertArguments
 	{
-		public AlertArguments(string title, string message, string accept, string cancel)
+		public AlertArguments(string title, string message, string accept, string cancel, bool allowCancelEvent)
 		{
 			Title = title;
 			Message = message;
 			Accept = accept;
 			Cancel = cancel;
 			Result = new TaskCompletionSource<bool>();
+			AllowCancelEvent = allowCancelEvent;
 		}
 
 		/// <summary>
 		///     Gets the text for the accept button. Can be null.
 		/// </summary>
 		public string Accept { get; private set; }
+
+		/// <summary>
+		///		True to allow back button or tapping outside of alert to cancel. False to close dialog without returning result on tap outside or back button.  Only affects Android implementation.
+		/// </summary>
+		public bool AllowCancelEvent { get; private set; }
 
 		/// <summary>
 		///     Gets the text of the cancel button.
